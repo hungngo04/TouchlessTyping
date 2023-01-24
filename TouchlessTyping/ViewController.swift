@@ -100,8 +100,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         self.view.bringSubviewToFront(eyePositionIndicatorView)
         
         
-        messageTextView.layer.borderWidth = 1
+        messageTextView.layer.borderWidth = 3
         messageTextView.layer.cornerRadius = 10
+        messageTextView.layer.borderColor = UIColor(red: 90/255, green: 156/255, blue: 209/255, alpha: 1).cgColor
                 
         // Set the view's delegate
         sceneView.delegate = self
@@ -118,8 +119,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         eyeRNode.addChildNode(lookAtTargetEyeRNode)
         
         // Set LookAtTargetEye at 3 meters away from the center of eyeballs to create segment vector
-        lookAtTargetEyeLNode.position.z = 3
-        lookAtTargetEyeRNode.position.z = 3
+        lookAtTargetEyeLNode.position.z = 4
+        lookAtTargetEyeRNode.position.z = 4
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -161,7 +162,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         var eyeLLookAt = CGPoint()
         var eyeRLookAt = CGPoint()
         
-        let heightCompensation: CGFloat = 312
+        let heightCompensation: CGFloat = 400
         
         DispatchQueue.main.async { [self] in
             
@@ -190,7 +191,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
                 eyeLLookAt.y = CGFloat(result.localCoordinates.y) / (self.phoneScreenSize.height / 2) * self.phoneScreenPointSize.height + heightCompensation
             }
             
-            let smoothThresholdNumber: Int = 50
+            let smoothThresholdNumber: Int = 20
             self.eyeLookAtPositionXs.append((eyeRLookAt.x + eyeLLookAt.x) / 2)
             self.eyeLookAtPositionYs.append(-(eyeRLookAt.y + eyeLLookAt.y) / 2)
             self.eyeLookAtPositionXs = Array(self.eyeLookAtPositionXs.suffix(smoothThresholdNumber))
@@ -275,7 +276,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     func getCluster(posX: Int, posY: Int) -> Int{
         //top left and bottom right
         //x     y     x     y
-        let corner = [389, 1325, 641, 1426,
+        let corner = [390, 1325, 641, 1426,
                       641, 1325, 966, 1426,
                       966, 1325, 1227, 1426,
                       389, 1426, 641, 1539,

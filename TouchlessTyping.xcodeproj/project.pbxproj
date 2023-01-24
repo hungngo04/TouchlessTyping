@@ -16,6 +16,7 @@
 		AFE949C3296FBE96004D587A /* Keyboard.png in Resources */ = {isa = PBXBuildFile; fileRef = AFE949C2296FBE96004D587A /* Keyboard.png */; };
 		AFE949C5296FBF2C004D587A /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE949C4296FBF2C004D587A /* Extension.swift */; };
 		AFE949C7296FD5F9004D587A /* Keyboard (1).png in Resources */ = {isa = PBXBuildFile; fileRef = AFE949C6296FD5F9004D587A /* Keyboard (1).png */; };
+		AFFB40452973591000485A60 /* Group 2.png in Resources */ = {isa = PBXBuildFile; fileRef = AFFB40442973591000485A60 /* Group 2.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 		AFE949C2296FBE96004D587A /* Keyboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Keyboard.png; sourceTree = "<group>"; };
 		AFE949C4296FBF2C004D587A /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		AFE949C6296FD5F9004D587A /* Keyboard (1).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Keyboard (1).png"; sourceTree = "<group>"; };
+		AFFB40442973591000485A60 /* Group 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Group 2.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +67,7 @@
 				AFE949B1296FB269004D587A /* art.scnassets */,
 				AFE949B3296FB269004D587A /* ViewController.swift */,
 				AFE949B5296FB269004D587A /* Main.storyboard */,
+				AFFB40442973591000485A60 /* Group 2.png */,
 				AFE949C6296FD5F9004D587A /* Keyboard (1).png */,
 				AFE949C2296FBE96004D587A /* Keyboard.png */,
 				AFE949B8296FB26B004D587A /* Assets.xcassets */,
@@ -136,6 +139,7 @@
 				AFE949B2296FB269004D587A /* art.scnassets in Resources */,
 				AFE949BC296FB26B004D587A /* LaunchScreen.storyboard in Resources */,
 				AFE949B9296FB26B004D587A /* Assets.xcassets in Resources */,
+				AFFB40452973591000485A60 /* Group 2.png in Resources */,
 				AFE949C3296FBE96004D587A /* Keyboard.png in Resources */,
 				AFE949B7296FB269004D587A /* Main.storyboard in Resources */,
 			);
