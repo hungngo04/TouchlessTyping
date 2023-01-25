@@ -5,6 +5,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -55,6 +56,13 @@
                                             <rect key="frame" x="-27" y="101" width="111" height="59"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="47s-nQ-euA">
+                                            <rect key="frame" x="122" y="68" width="11" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                 </view>
                                 <constraints>
@@ -239,7 +247,7 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" contentInsetAdjustmentBehavior="scrollableAxes" text="Message content here" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="NMi-iM-d7H">
                                 <rect key="frame" x="9" y="479" width="816" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -279,6 +287,7 @@
                     <connections>
                         <outlet property="blurBarView" destination="vT5-6S-UTW" id="ZHs-yM-vhD"/>
                         <outlet property="chosenCluster" destination="CMp-pq-0Fg" id="kw1-2V-XRu"/>
+                        <outlet property="clusterLabel" destination="47s-nQ-euA" id="ESb-VW-vII"/>
                         <outlet property="eyePositionIndicatorCenterView" destination="qrs-KN-fCd" id="ZO2-jM-TBM"/>
                         <outlet property="eyePositionIndicatorView" destination="Wol-sx-K7a" id="P0K-2q-lrM"/>
                         <outlet property="keyBoardImageView" destination="Sp3-RM-o9o" id="Tgk-8J-afY"/>
@@ -297,5 +306,8 @@
     <resources>
         <image name="Group 2.png" width="180" height="180"/>
         <image name="Keyboard (1).png" width="814" height="405"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

@@ -13,7 +13,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     @IBOutlet weak var blurBarView: UIVisualEffectView!
     @IBOutlet weak var lookAtPositionXLabel: UILabel!
     @IBOutlet weak var lookAtPositionYLabel: UILabel!
-    @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var clusterLabel: UILabel!
     @IBOutlet weak var chosenCluster: UILabel!
     @IBOutlet weak var messageTextView: UITextView!
@@ -24,6 +23,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     var frameCount = 0
     var clusterString = ""
     var isBlink = false
+    var isSmile = false
     
     //Left and right eyes node
     var eyeLNode: SCNNode = {
@@ -118,7 +118,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         eyeLNode.addChildNode(lookAtTargetEyeLNode)
         eyeRNode.addChildNode(lookAtTargetEyeRNode)
         
-        // Set LookAtTargetEye at 3 meters away from the center of eyeballs to create segment vector
+        // Look at a plane that 4 meters from eye
         lookAtTargetEyeLNode.position.z = 4
         lookAtTargetEyeRNode.position.z = 4
     }
@@ -165,21 +165,16 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         let heightCompensation: CGFloat = 400
         
         DispatchQueue.main.async { [self] in
-            
-            // Perform Hit test using the ray segments that are drawn by the center of the eyeballs to somewhere two meters away at direction of where users look at to the virtual plane that place at the same orientation of the phone screen
-            
+                        
             let phoneScreenEyeRHitTestResults = self.virtualPhoneNode.hitTestWithSegment(from: self.lookAtTargetEyeRNode.worldPosition, to: self.eyeRNode.worldPosition, options: nil)
             
             let phoneScreenEyeLHitTestResults = self.virtualPhoneNode.hitTestWithSegment(from: self.lookAtTargetEyeLNode.worldPosition, to: self.eyeLNode.worldPosition, options: nil)
-            
-            print(self.phoneScreenSize.width);
-            print(self.phoneScreenSize.height);
-            
+                        
             //right eye hit test results
             for result in phoneScreenEyeRHitTestResults {
                 
                 eyeRLookAt.x = CGFloat(result.localCoordinates.x) / (self.phoneScreenSize.width / 2) * self.phoneScreenPointSize.width
-                
+                 
                 eyeRLookAt.y = CGFloat(result.localCoordinates.y) / (self.phoneScreenSize.height / 2) * self.phoneScreenPointSize.height + heightCompensation
             }
             
@@ -211,6 +206,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
             if(!isBlink){
                 self.eyePositionIndicatorView.transform = CGAffineTransform(translationX: smoothEyeLookAtPositionX - self.view.frame.width / 2, y: smoothEyeLookAtPositionY - self.view.frame.height / 2)
             }
+            
+            print(isSmile)
         
             //self.eyePositionIndicatorView.transform = CGAffineTransform(translationX: 0, y: 0)
             
@@ -223,7 +220,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
             
             //Find cluster that the points go in
             let clusterLabel = self.getCluster(posX: lookAtPositionXInt, posY: lookAtPositionYInt)
-            //self.clusterLabel.text = "\(clusterLabel)"
+            
+            //Write the current cluster on the screen
+            self.clusterLabel.text = "\(clusterLabel)"
             
                         
             //Increase the appearance of cluster in 120 frame
@@ -231,13 +230,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
                 cnt[clusterLabel] += 1
                 self.frameCount += 1
             };
-            
-            //print(frameCount, clusterLabel)
-            //print(view.frame.width);
-            //print(view.frame.height);
-            
-            //print("\(frameCount) \(clusterLabel) \(cnt[clusterLabel])")
-            
+                        
             var maxCount = 0
             var maxCluster = 0
             if(self.frameCount > 120){
@@ -267,7 +260,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
             let distance = (distanceL.length() + distanceR.length()) / 2
             
             // Update distance label value
-//            self.distanceLabel.text = "\(Int(round(distance * 100))) cm"
+            //self.distanceLabel.text = "\(Int(round(distance * 100))) cm"
             
         }
         
@@ -276,15 +269,15 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     func getCluster(posX: Int, posY: Int) -> Int{
         //top left and bottom right
         //x     y     x     y
-        let corner = [390, 1325, 641, 1426,
-                      641, 1325, 966, 1426,
-                      966, 1325, 1227, 1426,
-                      389, 1426, 641, 1539,
-                      641, 1426, 966, 1539,
-                      966, 1426, 1227, 1539,
-                      389, 1539, 641, 1640,
-                      641, 1539, 966, 1640,
-                      966, 1539, 1227, 1640
+        let corner = [423, 1220, 662, 1347,
+                      662, 1219, 999, 1347,
+                      999, 1221, 1241, 1347,
+                      427, 1347, 662, 1480,
+                      662, 1347, 999, 1480,
+                      999, 1347, 1247, 1480,
+                      427, 1487, 662, 1623,
+                      662, 1487, 1006, 1623,
+                      999, 1487, 1247, 1623
         ]
         
         for row in 0...8{
@@ -302,12 +295,26 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
 
         if ((blinkLeft?.decimalValue ?? 0.0) + (blinkRight?.decimalValue ?? 0.0)) > 0.5 {
             isBlink = true
-            //print("blinking")
         }
         else{
             isBlink = false
         }
     }
+    
+    func detectSmiling(anchor: ARFaceAnchor) {
+        let smileLeft = anchor.blendShapes[.mouthSmileLeft]
+        let smileRight = anchor.blendShapes[.mouthSmileRight]
+
+        if ((smileLeft?.decimalValue ?? 0.0) + (smileRight?.decimalValue ?? 0.0)) > 0.5 {
+            isSmile = true
+        }
+        else{
+            isSmile = false
+        }
+
+    }
+    
+     
     
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         virtualPhoneNode.transform = (sceneView.pointOfView?.transform)!
@@ -321,6 +328,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         if let faceAnchor = anchor as? ARFaceAnchor, let faceGeometry = node.geometry as? ARSCNFaceGeometry {
             faceGeometry.update(from: faceAnchor.geometry)
             detectEyeBlink(anchor: faceAnchor)
+            detectSmiling(anchor: faceAnchor)
         }
     }
     
